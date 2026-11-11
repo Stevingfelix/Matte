@@ -1,0 +1,18 @@
+# SPA fallback for Apache / cPanel — app lives in /pikiz-reactjs/
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /pikiz-reactjs/
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /pikiz-reactjs/index.html [L]
+</IfModule>
+
+# long-term cache for hashed build files and images
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/gif "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+</IfModule>

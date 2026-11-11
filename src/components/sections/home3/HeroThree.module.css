@@ -1,0 +1,308 @@
+.gradientBackdrop {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+  background: linear-gradient(
+    125deg,
+    #fffdfb 0%,
+    #ffe5d4 26%,
+    #fff7f2 50%,
+    #ece4fb 76%,
+    #fffaf7 100%
+  );
+  background-size: 240% 240%;
+  animation: gradientSweep 12s ease-in-out infinite alternate;
+}
+
+.gradientBackdrop::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 68%, #ffffff 100%);
+}
+
+.orbWarm,
+.orbCool {
+  position: absolute;
+  border-radius: 50%;
+  will-change: transform;
+}
+
+.orbWarm {
+  top: -12%;
+  left: -6%;
+  width: 58vw;
+  height: 58vw;
+  max-width: 780px;
+  max-height: 780px;
+  background: radial-gradient(
+    circle,
+    rgba(251, 115, 42, 0.22) 0%,
+    rgba(255, 198, 165, 0.24) 38%,
+    rgba(255, 255, 255, 0) 70%
+  );
+  animation: orbDriftA 14s ease-in-out infinite alternate;
+}
+
+.orbCool {
+  top: 4%;
+  right: -8%;
+  width: 54vw;
+  height: 54vw;
+  max-width: 720px;
+  max-height: 720px;
+  background: radial-gradient(
+    circle,
+    rgba(196, 174, 248, 0.28) 0%,
+    rgba(255, 214, 192, 0.24) 42%,
+    rgba(255, 255, 255, 0) 72%
+  );
+  animation: orbDriftB 18s ease-in-out infinite alternate;
+}
+
+@keyframes gradientSweep {
+  0% {
+    background-position: 0% 35%;
+  }
+  50% {
+    background-position: 65% 60%;
+  }
+  100% {
+    background-position: 100% 30%;
+  }
+}
+
+@keyframes orbDriftA {
+  0% {
+    transform: translate3d(0%, 0%, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(18%, 12%, 0) scale(1.1);
+  }
+  100% {
+    transform: translate3d(8%, -6%, 0) scale(0.95);
+  }
+}
+
+@keyframes orbDriftB {
+  0% {
+    transform: translate3d(0%, 0%, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(-16%, 14%, 0) scale(1.08);
+  }
+  100% {
+    transform: translate3d(-6%, 4%, 0) scale(0.94);
+  }
+}
+
+.kineticWrap {
+  max-width: none;
+  width: auto;
+  justify-content: flex-start;
+}
+
+.kineticBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 20px;
+  text-decoration: none;
+  color: var(--pikiz-black, #0C0610);
+  padding: 6px 14px 6px 6px;
+  border-radius: 999px;
+  transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.kineticBadge:hover {
+  transform: translateY(-2px);
+}
+
+.kineticRingWrap {
+  position: relative;
+  width: 112px;
+  height: 112px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.kineticTextSvg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  animation: spinOrbit 18s linear infinite;
+}
+
+.kineticBadge:hover .kineticTextSvg {
+  animation-duration: 9s;
+}
+
+.kineticRingText {
+  font-family: var(--pikiz-font, "Inter", sans-serif);
+  font-size: 8.6px;
+  font-weight: 700;
+  letter-spacing: 0.21em;
+  text-transform: uppercase;
+  fill: rgba(12, 6, 16, 0.72);
+}
+
+.kineticOrbitTrack {
+  position: absolute;
+  inset: 22px;
+  border-radius: 50%;
+  border: 1px dashed rgba(12, 6, 16, 0.18);
+  animation: spinOrbitReverse 10s linear infinite;
+}
+
+.kineticOrbitDot {
+  position: absolute;
+  top: -3.5px;
+  left: 50%;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--pikiz-base, #FB732A);
+  transform: translateX(-50%);
+  box-shadow: 0 0 0 3px rgba(251, 115, 42, 0.2);
+}
+
+.kineticCore {
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: var(--pikiz-black, #0C0610);
+  color: var(--pikiz-white, #fff);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 12px 26px -10px rgba(12, 6, 16, 0.42);
+  transition: background-color 260ms ease, transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.kineticBadge:hover .kineticCore {
+  background-color: var(--pikiz-base, #FB732A);
+  transform: scale(1.06);
+}
+
+.kineticStar {
+  width: 18px;
+  height: 18px;
+  color: var(--pikiz-base, #FB732A);
+  animation: starPulseSpin 6s ease-in-out infinite;
+  transition: opacity 220ms ease, transform 240ms ease;
+}
+
+.kineticArrow {
+  position: absolute;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+  opacity: 0;
+  transform: translate(-3px, -3px);
+  transition: opacity 220ms ease, transform 240ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.kineticBadge:hover .kineticStar {
+  opacity: 0;
+  transform: scale(0.5) rotate(90deg);
+}
+
+.kineticBadge:hover .kineticArrow {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+.kineticMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.kineticStatus {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--pikiz-font, "Inter", sans-serif);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--pikiz-black, #0C0610);
+}
+
+.kineticPulseDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--pikiz-base, #FB732A);
+  animation: livePulse 1.8s ease-out infinite;
+}
+
+.kineticCaption {
+  font-family: var(--pikiz-font, "Inter", sans-serif);
+  font-size: 15px;
+  font-weight: 500;
+  color: rgba(12, 6, 16, 0.68);
+  transition: color 240ms ease;
+}
+
+.kineticBadge:hover .kineticCaption {
+  color: var(--pikiz-black, #0C0610);
+}
+
+@keyframes spinOrbit {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spinOrbitReverse {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes starPulseSpin {
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    transform: scale(1.16) rotate(45deg);
+  }
+}
+
+@keyframes livePulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(251, 115, 42, 0.55);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(251, 115, 42, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(251, 115, 42, 0);
+  }
+}
+
+@media (max-width: 575px) {
+  .kineticRingWrap {
+    width: 96px;
+    height: 96px;
+  }
+
+  .kineticMeta {
+    gap: 3px;
+  }
+}
+
+

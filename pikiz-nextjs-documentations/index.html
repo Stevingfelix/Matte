@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pikiz Next.js — Developer Documentation</title>
+<meta name="description" content="Internal developer documentation for the Pikiz Next.js creative-agency template: stack, routing, components, data layer, hooks and animation system.">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<div class="progress-bar"></div>
+
+<header class="topbar">
+  <button class="topbar__menu-btn" aria-label="Toggle navigation">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M3 6h18M3 12h18M3 18h18" stroke-linecap="round"/></svg>
+  </button>
+  <a href="#overview" class="topbar__brand">
+    <span class="topbar__logo">PZ</span>
+    Pikiz Docs
+  </a>
+  <span class="topbar__tag">Next.js 16 · Creative Agency Template</span>
+  <div class="topbar__search">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3" stroke-linecap="round"/></svg>
+    <input type="text" placeholder="Filter sections… (press /)" aria-label="Filter documentation sections">
+  </div>
+  <div class="topbar__spacer"></div>
+  <div class="topbar__links">
+    <a href="#overview">Overview</a>
+    <a href="#routing">Routes</a>
+    <a href="#architecture-notes">Architecture</a>
+  </div>
+  <button class="theme-toggle" aria-label="Toggle color theme">
+    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1" stroke-linecap="round"/></svg>
+    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg>
+  </button>
+</header>
+
+<div class="shell">
+  <div class="sidebar-overlay"></div>
+  <nav class="sidebar" aria-label="Documentation sections">
+
+    <div class="nav-group">
+      <div class="nav-group__title">Introduction</div>
+      <a class="nav-link" href="#overview">Overview</a>
+      <a class="nav-link" href="#tech-stack">Tech stack</a>
+      <a class="nav-link" href="#directory-structure">Directory structure</a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group__title">Application</div>
+      <a class="nav-link" href="#routing">Routing <span class="count">30</span></a>
+      <a class="nav-link" href="#components">Components <span class="count">45+</span></a>
+      <a class="nav-link" href="#views">Views</a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group__title">Data &amp; Logic</div>
+      <a class="nav-link" href="#data-layer">Data layer</a>
+      <a class="nav-link" href="#hooks">Hooks</a>
+      <a class="nav-link" href="#animations">Animation system</a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group__title">Foundation</div>
+      <a class="nav-link" href="#styling-assets">Styling &amp; assets</a>
+      <a class="nav-link" href="#config">Project config</a>
+      <a class="nav-link" href="#architecture-notes">Architecture notes</a>
+    </div>
+
+  </nav>
+
+  <main class="content">
+
+    <!-- ================= OVERVIEW ================= -->
+    <section class="hero" id="overview">
+      <span class="hero__eyebrow">① Overview</span>
+      <h1>Pikiz — Creative Agency Portfolio Template</h1>
+      <p class="lead">
+        Pikiz is a multi-demo <strong>Next.js 16 App Router</strong> theme for a creative / digital-marketing
+        agency. It ships four distinct homepage designs (each with boxed, dark, RTL, and one-page variants),
+        a full set of interior pages (about, services, work/portfolio, team, blog, pricing, contact, FAQ,
+        login, 404), and a standalone marketing page used to sell the template itself.
+      </p>
+      <div class="hero__badges">
+        <span class="badge"><strong>Framework</strong> Next.js 16.3.8 (App Router)</span>
+        <span class="badge"><strong>UI</strong> React 19 + React-Bootstrap</span>
+        <span class="badge"><strong>Motion</strong> GSAP 3 + ScrollTrigger + SplitText</span>
+        <span class="badge"><strong>Reveal</strong> wow.js + Animate.css</span>
+        <span class="badge"><strong>Carousel</strong> react-slick</span>
+        <span class="badge"><strong>Lang</strong> TypeScript, strict mode</span>
+      </div>
+    </section>
+
+    <div class="callout">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01" stroke-linecap="round"/></svg>
+      <p>
+        <strong>Signal, not noise:</strong> the home pages/DemoLanding page contain marketing copy
+        ("Elementor Page Builder", "20,000+ Clients") inherited from a sibling WordPress/HTML version
+        of the theme — these are <em>content strings</em>, not actual features implemented in this
+        Next.js codebase.
+      </p>
+    </div>
+
+    <!-- ================= TECH STACK ================= -->
+    <section class="section" id="tech-stack">
+      <h2><span class="idx">②</span> Tech stack <a class="hash" href="#tech-stack">#</a></h2>
+      <p class="section-desc">
+        Dependencies declared in <code>package.json</code>, package manager is <code>yarn@1.22.22</code>.
+        Scripts: <code>dev</code>, <code>build</code>, <code>start</code>, <code>lint</code>.
+      </p>
+
+      <h3>Dependencies</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Package</th><th>Version</th><th>Purpose</th></tr></thead>
+          <tbody>
+            <tr><td><code>next</code></td><td>16.3.8</td><td>Framework — App Router, routing, rendering</td></tr>
+            <tr><td><code>react</code> / <code>react-dom</code></td><td>19.2.8</td><td>UI runtime</td></tr>
+            <tr><td><code>bootstrap</code></td><td>^5.3.8</td><td>Grid &amp; utility CSS; also shipped as static <code>bootstrap.min.css</code></td></tr>
+            <tr><td><code>react-bootstrap</code></td><td>^2.10.10</td><td><code>Container</code> / <code>Row</code> / <code>Col</code> used throughout views &amp; sections</td></tr>
+            <tr><td><code>gsap</code></td><td>^3.15.0</td><td>Core animation engine — ScrollTrigger, ScrollToPlugin, SplitText power nearly all motion design</td></tr>
+            <tr><td><code>react-slick</code> + <code>slick-carousel</code></td><td>^0.31.0 / ^2.0.0</td><td>Carousels (hero sliders, team, pricing, testimonials) via the <code>PikizSlider</code> wrapper</td></tr>
+            <tr><td><code>wow.js</code></td><td>^1.2.2</td><td>Lightweight scroll-reveal — adds <code>.animated</code> to <code>.wow</code> elements, pairs with Animate.css</td></tr>
+            <tr><td><code>@fontsource/inter</code></td><td>^5.3.0</td><td>Self-hosted body webfont</td></tr>
+            <tr><td><code>@fontsource/bricolage-grotesque</code></td><td>^5.3.0</td><td>Self-hosted display/heading webfont</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Dev dependencies</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Package</th><th>Purpose</th></tr></thead>
+          <tbody>
+            <tr><td><code>typescript</code> ^5</td><td>Type checking (strict mode)</td></tr>
+            <tr><td><code>@types/node</code>, <code>@types/react</code>, <code>@types/react-dom</code>, <code>@types/react-slick</code></td><td>Type definitions</td></tr>
+            <tr><td><code>eslint</code> ^9 + <code>eslint-config-next</code> 16.3.8</td><td>Linting via flat config</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ================= DIRECTORY STRUCTURE ================= -->
+    <section class="section" id="directory-structure">
+      <h2><span class="idx">③</span> Directory structure <a class="hash" href="#directory-structure">#</a></h2>
+      <p class="section-desc">Top-level layout of the repository (excluding <code>node_modules</code>, <code>.git</code>, <code>.next</code>).</p>
+
+      <div class="folder-tree">
+<span class="dir">app/</span>                      <span class="cmt"># Next.js App Router route tree</span>
+├── <span class="dir">(site)/</span>                <span class="cmt"># main themed agency site — all pages + home variants</span>
+├── <span class="dir">(landing)/</span>             <span class="cmt"># standalone demo/sales page for the template itself</span>
+├── layout.tsx              <span class="cmt"># root &lt;html&gt;, fonts, global vendor CSS</span>
+└── not-found.tsx           <span class="cmt"># global 404</span>
+
+<span class="dir">public/</span>                   <span class="cmt"># static assets served as-is</span>
+└── assets/{css,images}     <span class="cmt"># compiled theme CSS skins + image library</span>
+
+<span class="dir">src/</span>
+├── <span class="dir">animations/</span>            <span class="cmt"># all GSAP wiring (see §Animations)</span>
+├── <span class="dir">assets/</span>                <span class="cmt"># bundled CSS + vendor icon fonts (imported in code)</span>
+├── <span class="dir">components/</span>            <span class="cmt"># blog/, cards/, common/, layout/, sections/</span>
+├── <span class="dir">data/</span>                  <span class="cmt"># typed TS content modules — the template's "CMS" layer</span>
+├── <span class="dir">hooks/</span>                 <span class="cmt"># small reusable React hooks</span>
+├── <span class="dir">views/</span>                 <span class="cmt"># full page compositions (home/, inner/, blog/)</span>
+└── utils.ts                <span class="cmt"># asset() / img() path helpers</span>
+      </div>
+
+      <h3>Page composition pipeline</h3>
+      <p>Every route follows the same layering, top to bottom:</p>
+      <div class="flow">
+        <div class="flow__step"><strong>app/.../page.tsx</strong><span>route + metadata.title</span></div>
+        <div class="flow__arrow">→</div>
+        <div class="flow__step"><strong>src/views/...</strong><span>page composition</span></div>
+        <div class="flow__arrow">→</div>
+        <div class="flow__step"><strong>components/sections</strong><span>reusable section blocks</span></div>
+        <div class="flow__arrow">→</div>
+        <div class="flow__step"><strong>cards / common / blog</strong><span>leaf UI components</span></div>
+        <div class="flow__arrow">→</div>
+        <div class="flow__step"><strong>src/data/*.ts</strong><span>static content</span></div>
+      </div>
+    </section>
+
+    <!-- ================= ROUTING ================= -->
+    <section class="section" id="routing">
+      <h2><span class="idx">④</span> Routing <a class="hash" href="#routing">#</a></h2>
+      <p class="section-desc">
+        Route path strings are centralized in <code>src/data/routes.ts</code> (<code>ROUTES</code> object) —
+        internal links always go through <code>ROUTES</code> + <code>SmartLink</code>, never hard-coded
+        <code>href</code> strings. Every <code>page.tsx</code> is a thin wrapper that sets
+        <code>metadata.title</code> and renders one view, often with a prop that switches a variant.
+      </p>
+
+      <h3><code class="mono-tag">app/(site)/</code> — main themed site</h3>
+      <p>Layout <code>app/(site)/layout.tsx</code> renders <code>&lt;SiteStyles /&gt;</code> (loads <code>bootstrap.min.css</code> + <code>pikiz.css</code>) then children.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Path</th><th>Renders</th><th>Variant / notes</th></tr></thead>
+          <tbody>
+            <tr><td><span class="route-path">/</span></td><td><code>HomeOne</code></td><td>Default homepage</td></tr>
+            <tr><td><span class="route-path">/home-2</span></td><td><code>HomeTwo</code></td><td>Home Two variant</td></tr>
+            <tr><td><span class="route-path">/home-3</span></td><td><code>HomeThree</code></td><td>Home Three variant</td></tr>
+            <tr><td><span class="route-path">/home-4</span></td><td><code>HomeFour</code></td><td>Home Four variant</td></tr>
+            <tr><td><span class="route-path">/home-boxed</span></td><td><code>HomeOne boxed</code></td><td>Boxed/contained layout <span class="tag">prop switch</span></td></tr>
+            <tr><td><span class="route-path">/home-dark</span></td><td><code>HomeTwo dark</code></td><td>Dark skin via <code>pikiz-dark.css</code> <span class="tag alt">useStylesheet</span></td></tr>
+            <tr><td><span class="route-path">/home-rtl</span></td><td><code>HomeTwo rtl</code></td><td>RTL via <code>pikiz-rtl.css</code> + <code>pikiz-custom-rtl.css</code>, sets <code>dir="rtl"</code></td></tr>
+            <tr><td><span class="route-path">/home-one-page</span></td><td><code>HomeOne onePage</code></td><td>Single-page with hash-anchor nav</td></tr>
+            <tr><td><span class="route-path">/home-two-page</span></td><td><code>HomeTwo onePage</code></td><td>One-page variant</td></tr>
+            <tr><td><span class="route-path">/home-three-page</span></td><td><code>HomeThree onePage</code></td><td>One-page variant</td></tr>
+            <tr><td><span class="route-path">/home-four-page</span></td><td><code>HomeFour onePage</code></td><td>One-page variant</td></tr>
+            <tr><td><span class="route-path">/portfolio-box-effect</span></td><td><code>PortfolioBoxEffect</code></td><td>Fullscreen slider with CSS "box reveal" transition</td></tr>
+            <tr><td><span class="route-path">/about</span></td><td><code>About</code></td><td>Header, AboutArea, ApproachArea, FunfactOne, Testimonials, FaqTwo, CtaArea</td></tr>
+            <tr><td><span class="route-path">/work</span></td><td><code>Work</code></td><td>Portfolio listing, reuses <code>ProjectOne</code></td></tr>
+            <tr><td><span class="route-path">/work-details</span></td><td><code>WorkDetails</code></td><td>Single case-study page</td></tr>
+            <tr><td><span class="route-path">/services</span></td><td><code>Services</code></td><td>Overview, reuses <code>ServiceArea</code></td></tr>
+            <tr><td><span class="route-path">/services/brand-identity</span></td><td><code>ServiceDetails</code></td><td rowspan="1">Shared detail template <span class="tag">shared component ×4</span></td></tr>
+            <tr><td><span class="route-path">/services/communication</span></td><td><code>ServiceDetails</code></td><td>Shared detail template</td></tr>
+            <tr><td><span class="route-path">/services/consultation</span></td><td><code>ServiceDetails</code></td><td>Shared detail template</td></tr>
+            <tr><td><span class="route-path">/services/research</span></td><td><code>ServiceDetails</code></td><td>Shared detail template</td></tr>
+            <tr><td><span class="route-path">/team</span></td><td><code>Team</code></td><td>Grid, reuses <code>TeamOne</code></td></tr>
+            <tr><td><span class="route-path">/team-carousel</span></td><td><code>TeamCarousel</code></td><td>react-slick carousel layout</td></tr>
+            <tr><td><span class="route-path">/team-details</span></td><td><code>TeamDetails</code></td><td>Single member bio</td></tr>
+            <tr><td><span class="route-path">/packages</span></td><td><code>Packages</code></td><td>Stacked/sticky pricing cards</td></tr>
+            <tr><td><span class="route-path">/packages-carousel</span></td><td><code>Packages carousel</code></td><td>Same view, carousel layout <span class="tag">prop switch</span></td></tr>
+            <tr><td><span class="route-path">/faq</span></td><td><code>Faq</code></td><td>Accordion page</td></tr>
+            <tr><td><span class="route-path">/contact</span></td><td><code>Contact</code></td><td>Form + Google Maps embed</td></tr>
+            <tr><td><span class="route-path">/login</span></td><td><code>Login</code></td><td>Login/register UI <span class="tag warn">non-functional demo</span></td></tr>
+            <tr><td><span class="route-path">/blog-grid</span></td><td><code>BlogGrid</code></td><td>Grid layout</td></tr>
+            <tr><td><span class="route-path">/blog-list</span></td><td><code>BlogList</code></td><td>No sidebar, centered</td></tr>
+            <tr><td><span class="route-path">/blog-list-left</span></td><td><code>BlogList sidebar="left"</code></td><td>Left sidebar</td></tr>
+            <tr><td><span class="route-path">/blog-list-right</span></td><td><code>BlogList sidebar="right"</code></td><td>Right sidebar</td></tr>
+            <tr><td><span class="route-path">/blog-details</span></td><td><code>BlogDetails</code></td><td>Single post, no sidebar</td></tr>
+            <tr><td><span class="route-path">/blog-details-left</span></td><td><code>BlogDetails sidebar="left"</code></td><td>Single post + left sidebar</td></tr>
+            <tr><td><span class="route-path">/blog-details-right</span></td><td><code>BlogDetails sidebar="right"</code></td><td>Single post + right sidebar</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3><code class="mono-tag">app/(landing)/</code> — standalone demo/marketing site</h3>
+      <p>
+        Layout <code>app/(landing)/layout.tsx</code> injects its own <code>&lt;link&gt;</code> tags for
+        <code>bootstrap.min.css</code> + <code>pikiz-landing.css</code> — a deliberately isolated skin that
+        does <strong>not</strong> use <code>SiteStyles</code>, <code>Layout</code>, header or footer.
+      </p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Path</th><th>Renders</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td><span class="route-path">/demo-landing</span></td><td><code>DemoLanding</code></td><td>Template showcase: hero, feature badges, grid linking to every <code>(site)</code> demo, footer CTA</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Root-level</h3>
+      <ul>
+        <li><code>app/layout.tsx</code> — root HTML document: imports <code>@fontsource/inter</code>, <code>@fontsource/bricolage-grotesque</code>, <code>slick-carousel/slick/slick.css</code>, <code>pikiz-icons</code> + Font Awesome CSS, <code>animate.min.css</code>; global metadata title template <code>"%s || Pikiz || Creative Agency Portfolio ReactJS Template"</code>.</li>
+        <li><code>app/not-found.tsx</code> — global 404, wraps <code>&lt;SiteStyles /&gt;</code> + <code>src/views/inner/NotFound.tsx</code> (GSAP-driven via <code>animations/sections.ts#error404</code>).</li>
+      </ul>
+    </section>
+
+    <!-- ================= COMPONENTS ================= -->
+    <section class="section" id="components">
+      <h2><span class="idx">⑤</span> Components <a class="hash" href="#components">#</a></h2>
+      <p class="section-desc">Reusable React components under <code>src/components/</code>, organized into five subfolders.</p>
+
+      <h3><code class="mono-tag">components/blog/</code></h3>
+      <div class="card-grid">
+        <div class="card"><h4>BlogSidebar.tsx</h4><p>Search, categories, latest posts, tag cloud — sourced from <code>src/data/blogList.ts</code>.</p></div>
+        <div class="card"><h4>Pagination.tsx</h4><p>Visual-only Prev / 1 / 2 / 3 / Next pager with local state.</p></div>
+      </div>
+
+      <h3><code class="mono-tag">components/cards/</code></h3>
+      <div class="card-grid">
+        <div class="card"><h4>BlogCard.tsx</h4><p>Blog teaser for home-page sections; <code>animation</code> prop (fadeInRight/fadeInUp).</p></div>
+        <div class="card"><h4>BlogCardList.tsx</h4><p>Horizontal card used on blog-list pages.</p></div>
+        <div class="card"><h4>BlogCardTwo.tsx</h4><p>Alternate style for Home 2/3/4, left/right reveal + image-first variant.</p></div>
+        <div class="card"><h4>PricingCard.tsx</h4><p>Pricing-plan card with <code>active</code> highlight state.</p></div>
+        <div class="card"><h4>ServiceCard.tsx</h4><p>Image-led service card with tags + <code>CircleButton</code> arrow link.</p></div>
+        <div class="card"><h4>TeamCard.tsx</h4><p>Member card; <code>noAnimation</code> flag for carousel use.</p></div>
+        <div class="card"><h4>TestimonialCard.tsx</h4><p>Quote card with custom-cursor text trigger.</p></div>
+        <div class="card"><h4>WorkBox.tsx</h4><p>Portfolio item card linking to work-details.</p></div>
+      </div>
+
+      <h3><code class="mono-tag">components/common/</code></h3>
+      <div class="card-grid">
+        <div class="card"><h4>Accordion.tsx</h4><p>GSAP-animated expand/collapse, used by FAQ sections.</p></div>
+        <div class="card"><h4>BigImage.tsx</h4><p>Full-width banner image band (pricing/FAQ pages).</p></div>
+        <div class="card"><h4>CircleButton.tsx</h4><p>Magnetic hover arrow button, paired with <code>interactions.ts#circleButtons</code>.</p></div>
+        <div class="card"><h4>Counter.tsx</h4><p>Scroll-triggered animated number counter (funfact stats).</p></div>
+        <div class="card"><h4>CtaArea.tsx</h4><p>Generic "let's talk" call-to-action strip.</p></div>
+        <div class="card"><h4>FormField.tsx</h4><p>Reusable labeled input/textarea control.</p></div>
+        <div class="card"><h4>Lines.tsx</h4><p>Converts <code>\n</code> in a string to <code>&lt;br/&gt;</code> nodes.</p></div>
+        <div class="card"><h4>MarqueeText.tsx</h4><p>Infinite scrolling text/keyword strip.</p></div>
+        <div class="card"><h4>PageHeader.tsx</h4><p>Standard inner-page title banner.</p></div>
+        <div class="card"><h4>PikizButton.tsx</h4><p>Signature styled button; wraps <code>SmartLink</code>.</p></div>
+        <div class="card"><h4>PikizSlider.tsx</h4><p>Wrapper around react-slick <code>Slider</code>; base for all carousels.</p></div>
+        <div class="card"><h4>SectionTitle.tsx / SectionTitleThree.tsx</h4><p>Subtitle+title+text heading combos used atop most sections.</p></div>
+        <div class="card"><h4>SmartLink.tsx</h4><p>Internal → <code>next/link</code>, <code>#hash</code> → smooth-scroll, external → plain <code>&lt;a&gt;</code>.</p></div>
+      </div>
+
+      <h3><code class="mono-tag">components/layout/</code></h3>
+      <div class="card-grid">
+        <div class="card"><h4>CustomCursor.tsx</h4><p>Floating cursor label over <code>.cursor-text</code> elements (GSAP-eased).</p></div>
+        <div class="card"><h4>Footer.tsx</h4><p>3 visual variants ("one"/"two"/"three"); nav from <code>footerLinks</code>.</p></div>
+        <div class="card"><h4>FooterCta.tsx</h4><p>"Let's Work" banner shown above footer when enabled.</p></div>
+        <div class="card"><h4>Header.tsx</h4><p>Renders 2 <code>HeaderBar</code>s (normal + sticky clone); 5 style variants.</p></div>
+        <div class="card"><h4>HeaderSidebar.tsx</h4><p>Slide-in nav panel for Home 3/4 "Menu" trigger.</p></div>
+        <div class="card"><h4>Layout.tsx</h4><p>Master page shell — cursor, preloader, header, footer, mobile nav, scroll-top.</p></div>
+        <div class="card"><h4>LayoutContext.tsx</h4><p>Context for mobile-nav/sidebar open state via <code>useLayout()</code>.</p></div>
+        <div class="card"><h4>MegaMenu.tsx</h4><p>Dropdown under "Home" nav item showcasing all demos.</p></div>
+        <div class="card"><h4>MobileNav.tsx</h4><p>Slide-out mobile nav drawer.</p></div>
+        <div class="card"><h4>NavMenu.tsx</h4><p>Recursive menu renderer, handles nested dropdowns + MegaMenu.</p></div>
+        <div class="card"><h4>Preloader.tsx</h4><p>First-visit intro loader (SVG wipe + "PIKIZ" letters).</p></div>
+        <div class="card"><h4>preloaderState.ts</h4><p>Singleton flag/event (<code>PRELOADER_DONE_EVENT</code>).</p></div>
+        <div class="card"><h4>ScrollTop.tsx</h4><p>Scroll-progress / back-to-top button (GSAP + ScrollTrigger).</p></div>
+        <div class="card"><h4>SiteStyles.tsx</h4><p>Injects <code>bootstrap.min.css</code> + <code>pikiz.css</code> for every (site) route.</p></div>
+      </div>
+
+      <h3><code class="mono-tag">components/sections/</code> — per-homepage building blocks</h3>
+      <p>Shared across pages: <code>ApproachArea</code>, <code>FaqFour</code>, <code>FaqTwo</code>, <code>FunfactOne</code>, <code>PricingOne</code>, <code>TeamOne</code>, <code>Testimonials</code> + <code>sections/about/AboutArea</code>.</p>
+      <div class="card-grid">
+        <div class="card"><h4>sections/home1/</h4><p>AboutOne, BannerImageOne, BlogOne, HeroOne (+ SocialWrap), ProjectOne, ServiceArea</p></div>
+        <div class="card"><h4>sections/home2/</h4><p>BannerFullscreen, BlogTwo, CtaTwoArea, FaqThree, HeroTwo, ServiceTwo, StudioArea, WorkArea</p></div>
+        <div class="card"><h4>sections/home3/</h4><p>BannerImageThree, BlogThree, BrandBanner, HeroThree, ServiceThree, TestimonialsThree, WorkThree</p></div>
+        <div class="card"><h4>sections/home4/</h4><p>BlogFour, CtaFooterTwo, HeroFour, ServiceFour, WorkFour</p></div>
+      </div>
+    </section>
+
+    <!-- ================= VIEWS ================= -->
+    <section class="section" id="views">
+      <h2><span class="idx">⑥</span> Views <a class="hash" href="#views">#</a></h2>
+      <p class="section-desc">Full page compositions under <code>src/views/</code>, imported by the thin route <code>page.tsx</code> files.</p>
+
+      <h3><code class="mono-tag">views/home/</code></h3>
+      <ul>
+        <li><strong>HomeOne.tsx</strong> — HeroOne → BannerImageOne → AboutOne → MarqueeText → ProjectOne → ServiceArea → FaqTwo → BlogOne → CtaArea. Props: <code>onePage</code>, <code>boxed</code>. Header "two", footer "two".</li>
+        <li><strong>HomeTwo.tsx</strong> — HeroTwo → BannerFullscreen → StudioArea → ServiceTwo → WorkArea → Testimonials (fade carousel) → FaqThree → TeamOne (limit 3) → BlogTwo → CtaTwoArea. Props: <code>onePage</code>, <code>dark</code>, <code>rtl</code>. Powers <code>/home-2</code>, <code>/home-dark</code>, <code>/home-rtl</code>, <code>/home-two-page</code>.</li>
+        <li><strong>HomeThree.tsx</strong> — HeroThree → BannerImageThree → WorkThree → ServiceThree → TestimonialsThree → BrandBanner → FaqFour → BlogThree. Header "five" with side-panel trigger.</li>
+        <li><strong>HomeFour.tsx</strong> — HeroFour → WorkFour → ApproachArea → FunfactOne → FaqFour → ServiceFour → BlogFour → CtaFooterTwo. Header "four" with side-panel trigger, footer "three".</li>
+      </ul>
+
+      <h3><code class="mono-tag">views/inner/</code></h3>
+      <p>One component per interior page: <code>About</code>, <code>Contact</code> (form + Google Map), <code>Faq</code> (Accordion), <code>Login</code> (demo forms), <code>NotFound</code>, <code>Packages</code> (<code>carousel</code> prop), <code>Services</code>, <code>ServiceDetails</code> (shared by all 4 service routes via <code>usePathname</code>), <code>Team</code>, <code>TeamCarousel</code>, <code>TeamDetails</code>, <code>Work</code>, <code>WorkDetails</code>.</p>
+
+      <h3><code class="mono-tag">views/blog/</code></h3>
+      <p><code>BlogDetails</code> (sidebar: none/left/right), <code>BlogGrid</code> (grid of BlogOne), <code>BlogList</code> (sidebar prop).</p>
+
+      <h3>Standalone views</h3>
+      <ul>
+        <li><strong>DemoLanding.tsx</strong> — template marketing page: feature badges, hero with "Purchase Template" CTA, grid of every home-page demo, "Amazing Features" grid, footer CTA. Owns its own stylesheet; uses <code>useWow()</code> directly, no shared <code>Layout</code>.</li>
+        <li><strong>PortfolioBoxEffect.tsx</strong> — fullscreen react-slick fade hero slider with a 24-cell randomized CSS "box reveal" mask (<code>GridMask</code>), custom arrows, reuses <code>SocialWrap</code> from <code>HeroOne</code>.</li>
+      </ul>
+    </section>
+
+    <!-- ================= DATA LAYER ================= -->
+    <section class="section" id="data-layer">
+      <h2><span class="idx">⑦</span> Data layer <a class="hash" href="#data-layer">#</a></h2>
+      <p class="section-desc">Static/mock content and config as typed TS modules under <code>src/data/</code> — effectively the template's "CMS" layer.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>File</th><th>Exports</th><th>Purpose</th></tr></thead>
+          <tbody>
+            <tr><td><code>blog.ts</code></td><td><code>BlogPostTwo</code>, <code>blogPostsTwo</code></td><td>"Article" style blog cards used on Home Two (2 items)</td></tr>
+            <tr><td><code>blogList.ts</code></td><td><code>ListPost</code>, <code>listPosts</code>, <code>sidebarCategories</code>, <code>sidebarLatestPosts</code>, <code>sidebarTags</code></td><td>Feeds <code>BlogSidebar</code> + blog-list pages (5 posts)</td></tr>
+            <tr><td><code>content.ts</code></td><td><code>SECTION_INTRO</code>, <code>faqs</code>/<code>faqsFive</code>, <code>Project</code>, <code>projectsLeft</code>/<code>projectsRight</code>, <code>ServiceItem</code>, <code>services</code>, <code>BlogPost</code>, <code>blogPosts</code>, <code>Testimonial</code>, <code>testimonials</code>, <code>heroServiceLinks</code>, <code>socialLinks</code>, <code>marqueeItems</code></td><td>Largest, general-purpose content file — FAQ, projects, services, blog, testimonials, socials, marquee</td></tr>
+            <tr><td><code>navigation.ts</code></td><td><code>MenuItem</code>, <code>DemoItem</code>, <code>demos</code>, <code>mainMenu</code>, <code>onePageMenu</code>, <code>footerLinks</code>, <code>footerBottomLinks</code></td><td>8 demo cards + full nested nav tree + footer nav</td></tr>
+            <tr><td><code>pricing.ts</code></td><td><code>PricingPlan</code>, <code>pricingPlans</code></td><td>3 plans: Starter / Professional / Growth</td></tr>
+            <tr><td><code>routes.ts</code></td><td><code>ROUTES</code></td><td>Single source of truth mapping every logical route name → URL path string</td></tr>
+            <tr><td><code>team.ts</code></td><td><code>TeamMember</code>, <code>teamMembers</code></td><td>6 member entries used by TeamOne / TeamCard / TeamCarousel</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ================= HOOKS ================= -->
+    <section class="section" id="hooks">
+      <h2><span class="idx">⑧</span> Hooks <a class="hash" href="#hooks">#</a></h2>
+      <p class="section-desc">Small reusable React hooks under <code>src/hooks/</code>.</p>
+      <div class="card-grid">
+        <div class="card"><h4>useBodyClass.ts</h4><p>Adds classes to <code>document.body</code> while mounted, removes on unmount/deps change (e.g. <code>bg-peach</code>, <code>boxed-wrapper</code>).</p></div>
+        <div class="card"><h4>useGsapAnimations.ts</h4><p>On route change, waits for preloader then calls <code>initAnimations()</code> inside <code>requestAnimationFrame</code>; disposes on cleanup.</p></div>
+        <div class="card"><h4>useScrollPosition.ts</h4><p>Tracks <code>scrollY</code> + upward scroll past 500px — drives the sticky cloned header reveal.</p></div>
+        <div class="card"><h4>useStylesheet.ts</h4><p>Mounts <code>&lt;link rel="stylesheet"&gt;</code> tags for component lifetime — swaps dark/RTL skins per variant.</p></div>
+        <div class="card"><h4>useWow.ts</h4><p>Dynamically imports <code>wow.js</code>, re-initializes ~50ms after each route change.</p></div>
+      </div>
+    </section>
+
+    <!-- ================= ANIMATIONS ================= -->
+    <section class="section" id="animations">
+      <h2><span class="idx">⑨</span> Animation system <a class="hash" href="#animations">#</a></h2>
+      <p class="section-desc">
+        Motion is layered: <strong>wow.js</strong> (class-based scroll reveal via <code>useWow</code>) +
+        <strong>GSAP / ScrollTrigger / SplitText</strong> (<code>useGsapAnimations</code> →
+        <code>initAnimations()</code>), both re-initialized on every client-side route change and
+        torn down to avoid leaks/duplicate triggers.
+      </p>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>File</th><th>Role</th></tr></thead>
+          <tbody>
+            <tr><td><code>gsap.ts</code></td><td>Registers plugins once (ScrollTrigger, ScrollToPlugin, SplitText); re-exports them; DOM helpers <code>all</code>/<code>one</code>/<code>num</code>/<code>isRtl</code>.</td></tr>
+            <tr><td><code>index.ts</code></td><td><code>initAnimations()</code> — single orchestrator: text effects → per-home hero animations → generic section effects → interaction effects → pricing sticky-active logic. Returns one cleanup function that reverts GSAP context/matchMedia and runs all collected cleanups in reverse.</td></tr>
+            <tr><td><code>interactions.ts</code></td><td><code>circleButtons()</code> — magnetic hover + cursor-following dot (event-delegated for carousel clones); <code>dualHoverText()</code> — footer social-link roll-up via SplitText clones.</td></tr>
+            <tr><td><code>sections.ts</code></td><td>Bulk of scroll-triggered effects: per-home heroes, banner reveals, image parallax/clip-reveal/hover-reveal, service area/item reveals, pinned approach/brand-banner/FAQ-shape/funfact-shape/footer-CTA blocks, footer big-text, 404 entrance, pricing sticky-active.</td></tr>
+            <tr><td><code>text.ts</code></td><td><code>lettersFadeIn</code>, <code>splitTextScroll</code>, <code>titleOne</code> (3D rotateX stagger), <code>titleTwo</code> (rise + de-blur), <code>titleThree</code> (per-letter stagger) — all keyed by CSS class.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ================= STYLING & ASSETS ================= -->
+    <section class="section" id="styling-assets">
+      <h2><span class="idx">⑩</span> Styling &amp; assets <a class="hash" href="#styling-assets">#</a></h2>
+
+      <h3>Static CSS — <code class="mono-tag">public/assets/css/</code></h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>File</th><th>Loaded by</th><th>Purpose</th></tr></thead>
+          <tbody>
+            <tr><td><code>bootstrap.min.css</code></td><td>SiteStyles + (landing) layout</td><td>Bootstrap 5 base</td></tr>
+            <tr><td><code>pikiz.css</code></td><td>SiteStyles</td><td>Main compiled theme stylesheet (loaded after bootstrap to win the cascade)</td></tr>
+            <tr><td><code>pikiz-dark.css</code></td><td><code>useStylesheet</code> on <code>/home-dark</code></td><td>Dark-skin overrides</td></tr>
+            <tr><td><code>pikiz-rtl.css</code> + <code>pikiz-custom-rtl.css</code></td><td><code>useStylesheet</code> on <code>/home-rtl</code></td><td>RTL layout overrides</td></tr>
+            <tr><td><code>pikiz-landing.css</code></td><td>(landing) layout</td><td>Exclusive skin for the demo-chooser page</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Bundled CSS &amp; vendor fonts — <code class="mono-tag">src/assets/</code></h3>
+      <ul>
+        <li><code>css/animate.min.css</code> — Animate.css keyframes, imported globally, pairs with wow.js (<code>.wow</code> + <code>.animated</code> + class names like <code>fadeInUp</code>).</li>
+        <li><code>vendors/fontawesome/</code> — Font Awesome icon font (<code>css/all.min.css</code> + woff/woff2/ttf/eot/svg), imported globally.</li>
+        <li><code>vendors/pikiz-icons/</code> — Custom IcoMoon-generated icon font (<code>style.css</code> + <code>fonts/icomoon.*</code>), used via classes like <code>icon-facebook</code>, <code>icon-pin-400</code>.</li>
+      </ul>
+
+      <h3>Fonts</h3>
+      <p><code>@fontsource/inter</code> and <code>@fontsource/bricolage-grotesque</code> — both imported (<code>/latin.css</code>) in the root layout as body / display typefaces.</p>
+
+      <h3>Images</h3>
+      <p><code>public/assets/images/</code>: <code>backgrounds</code>, <code>blog</code>, <code>cursor</code>, <code>favicons</code>, <code>gif</code>, <code>hero</code>, <code>icon</code>, <code>pikiz-landing</code>, <code>project</code>, <code>resources</code>, <code>service</code>, <code>shapes</code>, <code>team</code> — plus loose logo/loader/close assets.</p>
+    </section>
+
+    <!-- ================= CONFIG ================= -->
+    <section class="section" id="config">
+      <h2><span class="idx">⑪</span> Project config <a class="hash" href="#config">#</a></h2>
+      <div class="card-grid">
+        <div class="card"><h4>next.config.ts</h4><p>Essentially empty/default — no custom webpack, images, or redirects configured.</p></div>
+        <div class="card"><h4>tsconfig.json</h4><p>Target ES2017, <code>strict: true</code>, <code>moduleResolution: "bundler"</code>, <code>jsx: "react-jsx"</code>, path alias <code>@/*</code> → <code>./*</code>. Excludes a legacy <code>reactjs-files</code> folder.</p></div>
+        <div class="card"><h4>eslint.config.mjs</h4><p>Flat config composing <code>eslint-config-next</code> core-web-vitals + typescript; disables <code>@next/next/no-img-element</code> (GSAP manipulates <code>&lt;img&gt;</code> directly) and <code>react/no-unescaped-entities</code> (typographic quotes in copy).</p></div>
+        <div class="card"><h4>src/wow.d.ts</h4><p>Minimal type shim for the untyped <code>wow.js</code> package, consumed by <code>useWow.ts</code>.</p></div>
+      </div>
+    </section>
+
+    <!-- ================= ARCHITECTURE NOTES ================= -->
+    <section class="section" id="architecture-notes">
+      <h2><span class="idx">⑫</span> Architecture notes <a class="hash" href="#architecture-notes">#</a></h2>
+      <p class="section-desc">Key takeaways worth keeping in mind before touching this codebase.</p>
+      <ol>
+        <li><strong>Three-tier page pattern</strong> — <code>app/.../page.tsx</code> → <code>src/views/...</code> → <code>src/components/sections/...</code> → leaf components → <code>src/data/*.ts</code>. Follow this when adding a new page.</li>
+        <li><strong>Centralized routing</strong> — all cross-page navigation goes through the <code>ROUTES</code> constant and <code>SmartLink</code>; never hard-code internal <code>href</code> values.</li>
+        <li><strong>Layered animation</strong> — wow.js and GSAP/ScrollTrigger/SplitText both re-init on every client-side route change via <code>useWow</code> / <code>useGsapAnimations</code>, and both clean up afterward to avoid duplicate triggers or memory leaks.</li>
+        <li><strong>Variant switching via props, not duplication</strong> — dark/RTL/boxed/one-page/carousel variants are boolean or string props on view components (e.g. <code>HomeTwo({ dark, rtl, onePage })</code>, <code>Packages({ carousel })</code>); each <code>home-*</code> route is just a different prop combination into one of the four <code>Home*</code> views.</li>
+        <li><strong>Isolated landing sub-site</strong> — <code>app/(landing)/</code> is a deliberately separate marketing/demo-chooser site (own CSS skin, own layout, no shared header/footer) distinct from the <code>(site)</code> pages it advertises.</li>
+      </ol>
+    </section>
+
+    <footer class="content__footer">
+      <span>Pikiz Next.js — internal developer documentation.</span>
+      <span>Generated from a full codebase audit of <code>pikiz-nextjs</code>.</span>
+    </footer>
+
+  </main>
+</div>
+
+<button class="to-top" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M12 19V5M5 12l7-7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+
+<script src="assets/js/script.js"></script>
+</body>
+</html>
