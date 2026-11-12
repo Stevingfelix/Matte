@@ -4827,7 +4827,12 @@ body.megamenu-popup-active .mobile-nav__content {
     gap: 15px;
   }
 }
+.testimonials-three .sec-title__member__thumb {
+  flex-shrink: 0;
+}
 .testimonials-three .sec-title__member__thumb img {
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   object-fit: cover;
 }

@@ -25,6 +25,19 @@ const matteFunfacts = {
     { text: "Monthly Visitors\nDriven", stop: 3.8, suffix: "M", delay: "300ms" },
     { text: "Client Revenue\nGenerated", stop: 65, suffix: "M", prefix: "$", delay: "500ms" },
   ],
+  partners: [
+    "Solis Collective",
+    "Northbeam Labs",
+    "Atelier Nine",
+    "Pulse Commerce",
+    "Kinetix Retail",
+    "Aura Systems",
+  ],
+  proofs: [
+    { value: "2.4×", label: "Avg. Conversion Lift" },
+    { value: "< 4 wks", label: "First Sprint Launch" },
+    { value: "98%", label: "Partner Retention" },
+  ],
   reveal: {
     eyebrow: "Inside Matte Studio",
     title: "Built To Make Brands",
@@ -53,7 +66,7 @@ export default function HomeThree({ onePage }: { onePage?: boolean }) {
       footer="one"
     >
       <HeroThree id="home" onePage={onePage} />
-      <BannerImageThree />
+      <BannerImageThree onePage={onePage} />
       <WorkThree id="work" onePage={onePage} />
       <FunfactOne id="impact" {...matteFunfacts} />
       <ServiceThree id="services" onePage={onePage} />

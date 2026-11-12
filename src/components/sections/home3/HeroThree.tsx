@@ -52,13 +52,6 @@ export default function HeroThree({ id, onePage }: { id?: string; onePage?: bool
                     <span className={styles.kineticArrow}>↘</span>
                   </span>
                 </span>
-                <span className={styles.kineticMeta}>
-                  <span className={styles.kineticStatus}>
-                    <span className={styles.kineticPulseDot} aria-hidden="true" />
-                    2026 Studio Reel
-                  </span>
-                  <span className={styles.kineticCaption}>Selected Launches &amp; Systems</span>
-                </span>
               </SmartLink>
             </div>
             <div className="hero-three__customer">

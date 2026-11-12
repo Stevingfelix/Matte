@@ -345,6 +345,11 @@ export function funfactShape(mm: MM) {
       .to(shape, { y: "100vh", ease: "none", duration: 1 })
       .to(shape, { x: "55%", ease: "none", duration: 1 })
       .to(shape, { rotation: 720, scale: 20, transformOrigin: "50% 50%", ease: "none", duration: 1 })
+      .to(
+        ".funfact-one__top, .funfact-one__content > :not(.funfact-one__shape), .funfact-one__content-box",
+        { opacity: 0, pointerEvents: "none", duration: 0.35 },
+        "-=0.55"
+      )
       .to(".funfact-one", { backgroundColor: "#0C0610", duration: 0.45 }, "-=0.50");
 
     if (reveal) {

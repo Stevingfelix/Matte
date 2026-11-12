@@ -6,6 +6,7 @@ import { img } from "../../utils";
 import Counter from "../common/Counter";
 import PikizButton from "../common/PikizButton";
 import SectionTitle from "../common/SectionTitle";
+import styles from "./FunfactOne.module.css";
 
 interface FunfactStat {
   text: string;
@@ -13,6 +14,11 @@ interface FunfactStat {
   suffix?: string;
   prefix?: string;
   delay: string;
+}
+
+interface FunfactProof {
+  value: string;
+  label: string;
 }
 
 export interface FunfactReveal {
@@ -36,6 +42,8 @@ interface Props {
   title?: string;
   intro?: string;
   stats?: FunfactStat[];
+  proofs?: FunfactProof[];
+  partners?: string[];
   reveal?: FunfactReveal;
 }
 
@@ -45,10 +53,27 @@ export default function FunfactOne({
   title = "Strategic Actions",
   intro = `${SECTION_INTRO} We’re a digital products design`,
   stats = defaultStats,
+  proofs,
+  partners,
   reveal,
 }: Props = {}) {
+  const tickerItems = partners && partners.length > 0 ? [...partners, ...partners, ...partners] : [];
+  const floatDelays = [styles.statCircleDelay1, styles.statCircleDelay2, styles.statCircleDelay3];
+
   return (
-    <section className="funfact-one" id={id}>
+    <section className={`funfact-one ${reveal ? styles.impactSection : ""}`.trim()} id={id}>
+      {tickerItems.length > 0 && (
+        <div className={styles.partnerStrip} aria-label="Partner showcase">
+          <div className={styles.partnerTrack}>
+            {tickerItems.map((partner, idx) => (
+              <span className={styles.partnerItem} key={`${partner}-${idx}`}>
+                <span className={styles.partnerDot} aria-hidden="true" />
+                {partner}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
       <Container>
         <div className="funfact-one__top">
           <SectionTitle title={title} />
@@ -56,25 +81,44 @@ export default function FunfactOne({
         <Row className="gutter-y-30">
           <Col xl={5}>
             <div className="funfact-one__content">
-              <p className="funfact-one__text bw-split-text">{intro}</p>
-              <div className="funfact-one__shape">
+              <p className={`funfact-one__text bw-split-text ${proofs?.length ? styles.introCompact : ""}`.trim()}>
+                {intro}
+              </p>
+              {proofs && proofs.length > 0 && (
+                <div className={styles.proofList}>
+                  {proofs.map((proof) => (
+                    <div className={styles.proofItem} key={proof.label}>
+                      <span className={styles.proofValue}>{proof.value}</span>
+                      <span className={styles.proofLabel}>{proof.label}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+              <div className={`funfact-one__shape ${reveal ? styles.shapeIdle : ""}`.trim()}>
                 <img src={img("shapes/shape-round.png")} alt="shape" />
               </div>
             </div>
           </Col>
           <Col xl={7}>
             <div className="funfact-one__content-box">
-              {stats.map((s) => (
-                <div className="funfact-one__content-box__item wow bounceInUp" data-wow-duration="1500ms" data-wow-delay={s.delay} key={s.text}>
-                  <p className="funfact-one__content-box__text">
-                    {s.text.split("\n").map((l, i, a) => (
-                      <span key={i}>
-                        {l}
-                        {i < a.length - 1 && <br />}
-                      </span>
-                    ))}
-                  </p>
-                  <Counter stop={s.stop} prefix={s.prefix} suffix={s.suffix} className="funfact-one__content-box__count" />
+              {stats.map((s, idx) => (
+                <div
+                  className={`funfact-one__content-box__item wow bounceInUp ${reveal ? styles.statCircle : ""} ${reveal && idx === 0 ? styles.statCircleFeatured : ""} ${reveal ? floatDelays[idx % floatDelays.length] : ""}`.trim()}
+                  data-wow-duration="1500ms"
+                  data-wow-delay={s.delay}
+                  key={s.text}
+                >
+                  <div className={reveal ? styles.statCircleInner : undefined}>
+                    <p className="funfact-one__content-box__text">
+                      {s.text.split("\n").map((l, i, a) => (
+                        <span key={i}>
+                          {l}
+                          {i < a.length - 1 && <br />}
+                        </span>
+                      ))}
+                    </p>
+                    <Counter stop={s.stop} prefix={s.prefix} suffix={s.suffix} className="funfact-one__content-box__count" />
+                  </div>
                 </div>
               ))}
             </div>
@@ -82,7 +126,7 @@ export default function FunfactOne({
         </Row>
       </Container>
       {reveal && (
-        <div className="funfact-one__reveal">
+        <div className={`funfact-one__reveal ${styles.revealAmbient}`}>
           <Container>
             <div className="funfact-one__reveal-inner">
               {reveal.eyebrow && (
