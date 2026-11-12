@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import HomeOne from "@/src/views/home/HomeOne";
+import HomeThree from "@/src/views/home/HomeThree";
 
-export const metadata: Metadata = { title: "Home One" };
+export const metadata: Metadata = { title: { absolute: "Matte — Digital Strategy & Creative Studio" } };
 
 export default function Page() {
-  return <HomeOne />;
+  return <HomeThree onePage />;
 }
