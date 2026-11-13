@@ -11,7 +11,14 @@ export default function BrandBanner() {
   return (
     <section className="brand-banner">
       <div className="brand-banner__item">
-        <div className="brand-banner__item__bg" style={{ backgroundImage: `url(${img("backgrounds/v-banner-1-1.jpg")})` }}></div>
+        <div
+          className="brand-banner__item__bg"
+          style={{
+            backgroundImage: `url(${img("backgrounds/v-banner-1-1.jpg")})`,
+            backgroundPosition: "center",
+            backgroundSize: "cover",
+          }}
+        ></div>
         <span className="brand-banner__item__shape"></span>
         <Container className="position-relative">
           <div className="brand-banner__item__text-box">
